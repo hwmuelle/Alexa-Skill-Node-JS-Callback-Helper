@@ -30,7 +30,7 @@ const GetNewFactHandler = {
   },
 };
 
-const GetAPICALLBACK = {
+const PostAPICALLBACK = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
     // checks request type
@@ -54,6 +54,27 @@ const GetAPICALLBACK = {
         console.log('BODY: ' + chunk);
       });
     }).end();
+
+
+  },
+};
+
+
+const GetAPICALLBACK = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    // checks request type
+    return request.type === 'LaunchRequest'
+      || (request.type === 'IntentRequest'
+        && request.intent.name === 'GetAPIIntent');
+  },
+  handle(handlerInput) {
+    var request = require('request');
+    request('http://www.google.com', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Print the google web page.
+         }
+    })
 
     
   },
