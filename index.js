@@ -30,6 +30,19 @@ const GetNewFactHandler = {
   },
 };
 
+const GetAPICALLBACK = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    // checks request type
+    return request.type === 'LaunchRequest'
+      || (request.type === 'IntentRequest'
+        && request.intent.name === 'GetAPIIntent');
+  },
+  handle(handlerInput) {
+    //TODO Add API Callback
+  },
+};
+
 const HelpHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
