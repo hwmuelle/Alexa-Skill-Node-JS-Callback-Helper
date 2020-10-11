@@ -1,6 +1,7 @@
 // sets up dependencies
 const Alexa = require('ask-sdk-core');
 const i18n = require('i18next');
+const functionWrapper = null;
 
 // core functionality for fact skill
 const GetNewFactHandler = {
@@ -47,8 +48,8 @@ const PostAPICALLBACK = {
     };
     
     http.request(options, function(res) {
-      console.log('STATUS: ' + res.statusCode);
-      console.log('HEADERS: ' + JSON.stringify(res.headers));
+      console.log('STATUS Output: ' + res.statusCode);
+      console.log('HEADERS Output: ' + JSON.stringify(res.headers));
       res.setEncoding('utf8');
       res.on('data', function (chunk) {
         console.log('BODY: ' + chunk);
