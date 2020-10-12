@@ -3,6 +3,12 @@ const Alexa = require('ask-sdk-core');
 const i18n = require('i18next');
 const functionWrapper = null;
 
+let request = require('request');
+
+let apiKey = '*****************************';
+let city = 'portland';
+let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+
 // core functionality for fact skill
 const GetNewFactHandler = {
   canHandle(handlerInput) {
@@ -41,9 +47,13 @@ const GetNewItemHandler = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    // gets a random fact by assigning an array to the variable
-    // the random item from the array will be selected by the i18next library
-    // the i18next library is set up in the Request Interceptor
+    request(url, function (err, response, body) {
+      if(err){
+        console.log('error:', error);
+      } else {
+        console.log('body:', body);
+      }
+    });
     const randomFact = requestAttributes.t('FACTS');
     // concatenates a standard message with the random fact
     const speakOutput = requestAttributes.t('GET_FACT_MESSAGE') + randomFact;
