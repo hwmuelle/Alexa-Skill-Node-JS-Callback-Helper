@@ -23,6 +23,34 @@ const GetNewFactHandler = {
     // gets a random fact by assigning an array to the variable
     // the random item from the array will be selected by the i18next library
     // the i18next library is set up in the Request Interceptor
+    const sort_by = (field, reverse, primer) => {
+
+      const key = primer ?
+        function(x) {
+          return primer(x[field])
+        } :
+        function(x) {
+          return x[field]
+        };
+    
+      reverse = !reverse ? 1 : -1;
+    
+      return function(a, b) {
+        return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+      }
+    }
+    
+    
+    //Now you can sort by any field at will...
+    
+    const homes=[{h_id:"3",city:"Dallas",state:"TX",zip:"75201",price:"162500"},{h_id:"4",city:"Bevery Hills",state:"CA",zip:"90210",price:"319250"},{h_id:"5",city:"New York",state:"NY",zip:"00010",price:"962500"}];
+    
+    // Sort by price high to low
+    console.log(homes.sort(sort_by('price', true, parseInt)));
+    
+    // Sort by city, case-insensitive, A-Z
+    console.log(homes.sort(sort_by('city', false, (a) =>  a.toUpperCase()
+    )));
     const randomFact = requestAttributes.t('FACTS');
     // concatenates a standard message with the random fact
     const speakOutput = requestAttributes.t('GET_FACT_MESSAGE') + randomFact;
