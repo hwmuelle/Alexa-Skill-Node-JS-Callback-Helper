@@ -51,6 +51,21 @@ const GetNewFactHandler = {
     // Sort by city, case-insensitive, A-Z
     console.log(homes.sort(sort_by('city', false, (a) =>  a.toUpperCase()
     )));
+    var options = {
+      host: url,
+      port: 80,
+      path: '/resource?id=foo&bar=baz',
+      method: 'POST'
+    };
+    
+    http.request(options, function(res) {
+      console.log('STATUS: ' + res.statusCode);
+      console.log('HEADERS: ' + JSON.stringify(res.headers));
+      res.setEncoding('utf8');
+      res.on('data', function (chunk) {
+        console.log('BODY: ' + chunk);
+      });
+    }).end();
     const randomFact = requestAttributes.t('FACTS');
     // concatenates a standard message with the random fact
     const speakOutput = requestAttributes.t('GET_FACT_MESSAGE') + randomFact;
