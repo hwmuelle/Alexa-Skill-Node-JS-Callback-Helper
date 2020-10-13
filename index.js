@@ -197,6 +197,21 @@ const FallbackHandler = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+    var options = {
+      host: url,
+      port: 80,
+      path: '/resource?id=foo&bar=baz',
+      method: 'POST'
+    };
+    
+    http.request(options, function(res) {
+      console.log('STATUS: ' + res.statusCode);
+      console.log('HEADERS: ' + JSON.stringify(res.headers));
+      res.setEncoding('utf8');
+      res.on('data', function (chunk) {
+        console.log('BODY: ' + chunk);
+      });
+    }).end();
     return handlerInput.responseBuilder
       .speak(requestAttributes.t('FALLBACK_MESSAGE'))
       .reprompt(requestAttributes.t('FALLBACK_REPROMPT'))
